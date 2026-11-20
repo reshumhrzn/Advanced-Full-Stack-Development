@@ -1,44 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Course Details</title>
-</head>
-<body>
+<x-layouts.app title="Course Details">
 
     <h1>Course Details</h1>
 
-    @if(session('success'))
-        <p>{{ session('success') }}</p>
-    @endif
+    <div class="card">
 
-    <p><strong>ID:</strong> {{ $course->id }}</p>
+        <p><strong>ID:</strong> {{ $course->id }}</p>
 
-    <p><strong>Name:</strong> {{ $course->name }}</p>
+        <p><strong>Name:</strong> {{ $course->name }}</p>
 
-    <p><strong>Description:</strong> {{ $course->description }}</p>
+        <p><strong>Description:</strong> {{ $course->description ?? 'No description available' }}</p>
 
-    <p><strong>Duration:</strong> {{ $course->duration }} weeks</p>
+        <p><strong>Duration:</strong> {{ $course->duration }} weeks</p>
 
-    <p><strong>Fee:</strong> {{ $course->fee }}</p>
+        <p><strong>Fee:</strong> {{ number_format($course->fee, 2) }}</p>
 
-    <p><strong>Difficulty:</strong> {{ $course->difficulty }}</p>
+        <p><strong>Difficulty:</strong> {{ $course->difficulty }}</p>
 
-    <p>
-        <strong>Status:</strong>
-        {{ $course->is_active ? 'Active' : 'Inactive' }}
-    </p>
+        <p><strong>Active:</strong> {{ $course->is_active ? 'Yes' : 'No' }}</p>
 
-    <br>
+    </div>
 
-    <a href="{{ route('courses.edit', $course->id) }}">
-        Edit Course
-    </a>
+    <a href="{{ route('courses.edit', $course) }}" class="btn">Edit Course</a>
 
-    <br><br>
+    <a href="{{ route('courses.index') }}">Back to Courses</a>
 
-    <a href="{{ route('courses.index') }}">
-        Back to Courses
-    </a>
+    <x-delete-form :action="route('courses.destroy', $course)" />
 
-</body>
-</html>
+</x-layouts.app>
